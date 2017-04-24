@@ -1,0 +1,2 @@
+C:\GitRepos\BouvetOne\HttpSecurity\HttpSecurity\bin\Debug\HttpSecurity.exe.config
+C:\GitRepos\BouvetOne\HttpSecurity\HttpSecurity\obj\Debug\HttpSecurity.csprojResolveAssemblyReference.cache

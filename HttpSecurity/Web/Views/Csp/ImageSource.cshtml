@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "ImageSource";
+    
+    string imgIntern = "<img src=\"/Content/Penguins.jpg\" alt=\"[Internt bilde]\" />";
+    string imgDataAbbr = "<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhE ... gqO2uOq+env8BzqX54ny4exgAAAAASUVORK5CYII=\" alt=\"[data:image/png;]\" />";
+    string imgData = "<img src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFIAAAAWCAYAAABT5cvhAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAFBhaW50Lk5FVCB2My41Ljg3O4BdAAAEgklEQVRYR+2XWchVVRiGfwdwyMxGKKJSUQkc0vJG04vQhgtBMEkJhxS6sKDIoiKooKCBDEkIISmR6iJKFIxAC6wMLPlTE60oo0EaaaLSsMyed/GuzbeHI3r+c+HFeeHh3/v93vXvc769ztpr93TVQR1f3nPcbLfVFaIfS0Nv7rTdWiHcbWQQ/eg2shOiH91GdkL0o9vIToh+dBvZCdGPvjeS4/NhPFxk66REfjhcARNgmO3TTny2wTAORsEg2yXht93Id2EFfBw88TU8CEM9pCZqM+BNOAZ53L+wBa50LInzy1wXm2zXRK30RWBuON/lWKOovxayi2zLnwKb4W/XxBF4BS53LInzeP0Cl+tqCrfgExjpYYXw7g+ZJtTcWx1Xvt1G9ofPg3e1oyXhXwBHnfkN0gTg7+0Qb3SVf2Bx+ieI4440shdeBM3S/+yJT6GYmRxXL/YNrIeX4Ht7mTke01Yj7akZ2duYghXh3x0yz9q7MXjiR9AsFDqOtes8Jl5fN3C7UK1RISx+h/SPsjifBF+6Lh62Pwx+Df6TMDANQhwPgnWuia9gIPSlkfGausGjUtjivB/oZudx+ilrPYw3dS0U6yLHo+Fn18QB+7Xrn1AhLG6yXRL+RMgz85C9RT4Xr6dgRfj6Ob4fcjdA242UOH4i+M/YTuJca3Wu9dqLs3Eb9LM/BB6APyHXRfou/G27kbpr6SJNoqapnbMXw5pwPtexmqgtC7mHoK+N1LW1nslXE0a4pNoG+2KFvaeCN8/ehfBF8IX+lxo72Jm2G7nHVqOoa83MWW2NXgjnUxyridq1IbcKYiM3O1YTtZZfhHOtwbl2j70RcNjeXzDcflxeptpbEDz90vRdSls9zk+5kT85/Ac07qkkanucE+fCY+F8iWM1Ubsr5PQgGBrO9zpWE7X7Qm6Z7STOrwo1PeC09t4WvOcdVfaR4N9i70x4GTZBmgT8LWa2xPkpN1JPrjzgXtsl4c8JmY/szQ7eAajtM/HOBu1Dc26yfeWzNyOFg/DU7M9CZrxLhfDeCfWFEG/0NMeUuyb4rT7nGaDrfQBa+7W2z4c87nFHW4vQ9DBA+yztC4e4NgCWgGZrzix3TRfbG/wdMEE1ieOpEL9cfHOKs1Tbj2KnwPGlsNU1sdOlkvDjBv1QON7nSBLn1c/5Nox1WfXJ8J5r4kPQ0/+S4GmnUHqxaBSh1WGQ0BqzH7Shjf4bMMDDNE7bi7wuZb6FHyreLzDGwzROWyPd/ZjRw05bl7hv1f9Os7gq/OoGPXOHI4Xwmj6nHjbxBgg9cCZ6mMbFX6s+136XmkVAM+9pD2jFq1B7f8abBmpe0xhxECY5XghP7/OaxU1jhPZ2sxxvFHW90sYxet07x+WS8GdC9SUh8h1MdzyJcy1Nu11PuHRiEdQirieYNuC6O7pjauD1jjSKujbKK0Hrlj6Qxr0F+qJpO9EkappVWpO0v9Ms1guBfoaPwnmOtRQZTYDnQA3UrL/ZpUZRPwu0dO1yXtfTPlcPtvSUrwpf67W2RfvgqO2uOq+env8BzqX54ny4exgAAAAASUVORK5CYII=\" alt=\"[data:image/png;]\" />";
+    string imgEkstern = "<img src=\"https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif\" alt=\"[Eksternt bilde]\" />";
+}
+
+<h2>Image source</h2>
+
+
+<ul>
+<li>@Html.ActionLink("Image-src: none", "ImageSource", new { src = "none" })</li>
+<li>@Html.ActionLink("Image-src: self", "ImageSource", new { src = "self" })</li>
+<li>@Html.ActionLink("Image-src: *", "ImageSource", new { src = "*" })</li>
+</ul>
+
+
+
+<h3>Http Header (Response)</h3>
+<code>
+    Response.AddHeader("Content-Security-Policy", @String.Format("image-src '{0}'", ViewBag.Source ?? ""));
+</code>
+
+
+<h3>Html</h3>
+
+<code>
+@imgIntern<br />
+@imgDataAbbr<br />
+@imgEkstern<br /></code>
+
+<section class="result">
+    @Html.Raw(imgIntern)
+    @Html.Raw(imgData)
+    @Html.Raw(imgEkstern)
+</section>
+
+
