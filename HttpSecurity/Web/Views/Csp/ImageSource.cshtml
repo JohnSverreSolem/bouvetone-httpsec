@@ -12,16 +12,19 @@
 
 
 <ul>
-<li>@Html.ActionLink("Image-src: none", "ImageSource", new { src = "none" })</li>
-<li>@Html.ActionLink("Image-src: self", "ImageSource", new { src = "self" })</li>
-<li>@Html.ActionLink("Image-src: *", "ImageSource", new { src = "*" })</li>
+<li>@Html.ActionLink("img-src 'none'", "ImageSource", new { src = "none" })</li>
+<li>@Html.ActionLink("img-src 'self'", "ImageSource", new { src = "self" })</li>
+<li>@Html.ActionLink("img-src media.giphy.com", "ImageSource", new { src = "url" })</li>
+<li>@Html.ActionLink("img-src 'self' media.giphy.com", "ImageSource", new { src = "selfurl" })</li>
+<li>@Html.ActionLink("img-src 'self' data:", "ImageSource", new { src = "selfdata" })</li>
+<li>@Html.ActionLink("img-src '*'", "ImageSource", new { src = "all" })</li>
 </ul>
 
 
 
 <h3>Http Header (Response)</h3>
 <code>
-    Response.AddHeader("Content-Security-Policy", @String.Format("image-src '{0}'", ViewBag.Source ?? ""));
+    Response.AddHeader("Content-Security-Policy", @String.Format("image-src {0}", ViewBag.Source ?? ""));
 </code>
 
 
