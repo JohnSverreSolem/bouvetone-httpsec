@@ -1,0 +1,254 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html base="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Presentasjon Secure Http Headers</title>
+    <link rel="stylesheet" href="/Content/reveal/css/reveal.css">
+    <link rel="stylesheet" href="/Content/reveal/css/theme/black.css">
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="/Content/reveal/lib/css/zenburn.css">
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '/Content/reveal/css/print/pdf.css' : '/Content/reveal/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    
+    <style type="text/css">
+        .reveal .slides .left {
+             text-align: left;
+        }
+
+        .reveal .slides code,
+        .reveal .slides .small {
+             font-size: 0.8em;
+        }
+
+        .reveal .slides .fragment.visible.dim:not(.current-fragment) {
+            opacity: 0.5;
+        }
+
+        .reveal .slides em,
+        .reveal .slides strong,
+        .reveal .slides dt
+         {
+            color: cadetblue;
+        }
+
+        .reveal h1 {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h1>Sikkerhetsboost med Secure Http Headers</h1>
+                <p>- CSP og HSTS</p>
+                <p>
+                    <small>John Sverre Solem (<a href="mailto:john.solem@bouvet.no">john.solem@bouvet.no</a>)</small>
+                </p>
+            </section>
+            <section>
+                <h2>Motivasjon</h2>
+                <ul>
+                    <li>Sikkerhet blir ofte nedprioritert og utsatt på tross av at det burde være med fra starten av.</li>
+                    <li>Sikkerhet er gjerne assosiert med en ekspertaktivitet, som er vanskelig å beherske.</li>
+                </ul>
+                <p class="fragment"><em>HTTP Security Headers</em> er lette å ta i bruk og kan faktisk klaskes oppå applikasjonen.</p>
+            </section>
+            <section>
+                <h2>Content Security Policy (CSP)</h2>
+            </section>
+            <section>
+                <h3>Kort forklart</h3>
+                <ul>
+                    <li>Regler for hvor innhold på en nettside kan komme fra</li>
+                    <li>Restriksjoner for scriptkjøring</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Hvorfor CSP?</h3>
+                <p><strong>Adresserer injection-angrep (XSS)!</strong></p>
+                <ol>
+                    <li><em>Reflektert</em> - brukerdata (angrep) fra request inkluderes i respons</li>
+                    <li><em>Lagret</em> - brukerdata (angrep) lagres på server og inkluderes i framtidige responser.</li>
+                    <li><em>DOM</em> - Klientsideangrep (involverer ikke serverside - typisk SPA)</li>
+                </ol>
+            </section>
+
+            <section>
+                <h3>HTTP-headere</h3>
+                <pre><code class="http" data-trim>
+                    Content-Security-Policy
+                    Content-Security-Policy-Report-Only
+				</code></pre>
+            </section>
+
+            <section>
+                <h3>Direktiver og kilder</h3>
+                <pre><code class="http">Content-Security-Policy: direktiv1 kilde1 kilde2; direktiv2 kilde3</code></pre>
+                <div class="left">
+                    <p>CSP beskrives av:</p>
+                    <dl>
+                        <dt>Direktiver</dt>
+                        <dd>Type innhold</dd>
+                        <dt>Kilder</dt>
+                        <dd>Hvor innholdet kan lastes fra</dd>
+                    </dl>
+                </div>
+            </section>
+
+            <section>
+                <h3>CSP 1.0 Direktiver</h3>
+                <p><em>Svarer stort sett til HTML-tagger.</em></p>
+
+                <small>
+                    <ul>
+                        <li class="fragment dim">default-src (fallback for alle kilder som ikke er spesifisert)</li>
+                        <li class="fragment dim">script-src</li>
+                        <li class="fragment dim">style-src</li>
+                        <li class="fragment dim">object-src</li>
+                        <li class="fragment dim">img-src</li>
+                        <li class="fragment dim">media-src (video/audio)</li>
+                        <li class="fragment dim">frame-src</li>
+                        <li class="fragment dim">font-src</li>
+                        <li class="fragment dim">connect-src (ajax, websockets ++)</li>
+                        <li class="fragment dim">report-uri</li>
+                    </ul>
+                </small>
+            </section>
+            <section>
+                <h3>CSP Level 2 Direktiver</h3>
+                <ul>
+                    <li class="fragment">Lagt til noen</li>
+                    <li class="fragment">Endret noen</li>
+                    <li class="fragment">Fjernet noen (overflødiggjort)</li>
+                </ul>
+            </section>
+            <section>
+                <h3>CSP Kilder </h3>
+                <p><em>Brukes i kombinasjon med direktiver - eks script-src</em></p>
+                <dl>
+                    <dt>Generelle:</dt>
+                    <dd>'none', 'self', 'unsafe-inline', 'unsafe-eval'</dd>
+                    <dt>URL-baserte:</dt>
+                    <dd> *, https:, *.site.com, https://www.site.com</dd>
+                </dl>
+            </section>
+            <section>
+                <h3>Eksempelbruk</h3>
+                <pre style="font-size:0.5em;"><code class="http">Content-Security-Policy: default-src 'self'; script-src 'self' scripts.site.com</code></pre>
+                <ul class="impl">
+                    <li>Alle innholdstyper må komme fra samme sted som siden som ble lastet, med unntak av script som også kan lastes fra scripts.site.com</li>
+                    <li>Inline css og script blir blokkert</li>
+                </ul>
+            </section>
+            <section>
+                <h3>Rapportering</h3>
+                <p class="left">Legg til direktiv <em>report-uri</em> og <em>url</em></p>
+
+                <p class="left"><span class="glyphicon glyphicon-arrow-right"></span>Nettleser sender JSON-rapport til denne url med beskrivelse av hendelser som bryter oppsatte regler.</p>
+                <p class="left">
+                    Dersom Content-Security-Policy-Report-Only benyttes i stedet for den vanlige Content-Security-Policy
+                    så blokkeres ingenting, men rapporter på regelbrudd blir sendt.
+                </p>
+            </section>
+            <section>
+                <h3>Browser-støtte</h3>
+                <dl>
+                    <dt>CSP 1.0:</dt>
+                    <dd>Opera 15, Chrome 25, Firefox 23, Safari 6, Edge</dd>
+                    <dt>CSP Level 2:</dt>
+                    <dd>Opera 27, Chrome 40, Firefox 31 (delvis)</dd>
+                </dl>
+                <a href="http://caniuse.com/#search=csp">http://caniuse.com/#search=csp</a>
+            </section>
+            <section>
+                <h2>HTTP Strict Transport Security (HSTS)</h2>
+            </section>
+            <section>
+                <h3>Kort forklart</h3>
+                <p>
+                    Lar serveren fortelle klienten at all kommunikasjon skal foregå med HTTPS
+                </p>
+            </section>
+            <section>
+                <h3>Hvorfor HSTS?</h3>
+                <p><em>Beskytter mot downgrade- og man-in-the-middle-angrep</em></p>
+                <div class="fragment dim">
+                    <p class="left"><strong>Eksempel 1:</strong> En bruker lagrer et bokmerke eller skriver inn en adresse uten http://</p>
+                    <p class="left">- HSTS redirigerer automatisk til HTTPS</p>
+                </div>
+                <div class="fragment dim">
+                    <p class="left"><strong>Eksempel 2:</strong> Serveren sertifikat har feil eller er utløpt</p>
+                    <p class="left">- HSTS tillater ikke å overstyre feilen</p>
+                </div>
+            </section>
+            <section>
+                <h3>HTTP-header</h3>
+                <pre><code class="http" data-trim>
+                    Strict-Transport-Security: max-age=31536000
+                    Strict-Transport-Security: max-age=31536000; includeSubDomains
+                </code></pre>
+                <dl class="small fragment">
+                    <dt>max-age</dt><dd>forteller klienten hvor lenge requester skal automatisk byttes til HTTPS</dd>
+                    <dt>includeSubDomains</dt><dd>forteller klienten at dette også skal gjelde for subdomener av domenet</dd>
+                </dl>
+            </section>
+            <section>
+                <h3>Preload</h3>
+                <p class="left"><em>Den aller første requesten er fortsatt sårbar, for da vet ennå ikke klienten om serverens HSTS-policy</em></p>
+                <div class="fragment dim">
+                    <pre><code class="http" data-trim>
+                        Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+                    </code></pre>
+                    <p class="small left">
+                        <strong>preload</strong> forteller nettleseren/browseren at siten ønsker å være med på preload. Fungerer som et samtykke fra site-eier.
+                    </p>
+                </div>
+                <div class="fragment dim">
+                    <p class="left small">Et domene kan så meldes inn i lister (eks:
+                        <a href="https://hstspreload.org/" target="_blank">https://hstspreload.org/</a>) som preloades inn i nettleserene.
+                    </p>
+                    <small>PS: Her bør man være sikker på hva man gjør - vanskelig å reversere</small>    
+                </div>
+            </section>
+            
+            <section>
+                @*Videre:
+                - OWASP Secure Headers Project
+                - NWebSec /  André N. Klingsheim
+                - https://content-security-policy.com/
+                - https://hstspreload.org/*@
+            </section>
+        </div>
+    </div>
+    <script src="/Content/reveal/lib/js/head.min.js"></script>
+    <script src="/Content/reveal/js/reveal.js"></script>
+    <script>
+        // More info https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            history: true,
+
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            dependencies: [
+                { src: '/Content/reveal/plugin/markdown/marked.js' },
+                { src: '/Content/reveal/plugin/markdown/markdown.js' },
+                { src: '/Content/reveal/plugin/notes/notes.js', async: true },
+                { src: '/Content/reveal/plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+            ],
+
+            transition: 'convex' // none/fade/slide/convex/concave/zoom
+        });
+    </script>
+</body>
+</html>
