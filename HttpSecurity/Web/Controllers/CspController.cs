@@ -18,8 +18,9 @@ namespace Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ImageSource(CspSource src = CspSource.None)
         {
-            Response.AddHeader("Content-Security-Policy", String.Format("img-src {0};", GetSource(src, "media.giphy.com")));
-            ViewBag.Source = src;
+            string source = GetSource(src, "media.giphy.com");
+            Response.AddHeader("Content-Security-Policy", String.Format("img-src {0};", source));
+            ViewBag.Source = source;
 
             return View();
         }
@@ -34,7 +35,8 @@ namespace Web.Controllers
             All = 16,
             SelfUrl = Self | Url,
             SelfData = Self | Data,
-            SelfDataUrl  = Self | Data | Url
+            SelfDataUrl  = Self | Data | Url,
+            AllData  = All | Data
         }
 
         private string GetSource(CspSource source, string url = "www.example.com")
@@ -48,7 +50,7 @@ namespace Web.Controllers
 
             if (source.HasFlag(CspSource.All))
             {
-                return "'*'";
+                sources.Add("*");
             }
 
             if (source.HasFlag(CspSource.Self))
