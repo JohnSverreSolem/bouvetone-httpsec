@@ -10,8 +10,11 @@
 
 <h2>Image source</h2>
 
+<a class="btn btn-default" href="@Url.Action("Index", "Presentation")#demoImageSource"><span class="glyphicon glyphicon-circle-arrow-left"></span> Tilbake til presentasjon</a>
 
-<ul>
+<h3>Ulik bruk av img-src:</h3>
+
+<ol>
 <li>@Html.ActionLink("img-src 'none'", "ImageSource", new { src = "none" })</li>
 <li>@Html.ActionLink("img-src 'self'", "ImageSource", new { src = "self" })</li>
 <li>@Html.ActionLink("img-src media.giphy.com", "ImageSource", new { src = "url" })</li>
@@ -19,7 +22,7 @@
 <li>@Html.ActionLink("img-src 'self' data:", "ImageSource", new { src = "selfdata" })</li>
 <li>@Html.ActionLink("img-src *", "ImageSource", new { src = "all" })</li>
 <li>@Html.ActionLink("img-src * data:", "ImageSource", new { src = "alldata" })</li>
-</ul>
+</ol>
 
 
 
@@ -37,9 +40,17 @@
 @imgEkstern<br /></code>
 
 <section class="result">
-    @Html.Raw(imgIntern)
-    @Html.Raw(imgData)
-    @Html.Raw(imgEkstern)
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.Raw(imgIntern)
+        </div>
+        <div class="col-xs-4">
+            @Html.Raw(imgData)
+        </div>
+        <div class="col-xs-4">
+            @Html.Raw(imgEkstern)
+        </div>
+    </div>
 </section>
 
 

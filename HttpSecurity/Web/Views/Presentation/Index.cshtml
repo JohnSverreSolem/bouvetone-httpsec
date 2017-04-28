@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/Content/reveal/css/theme/black.css">
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="/Content/reveal/lib/css/zenburn.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Printing and PDF exports -->
     <script>
         var link = document.createElement('link');
@@ -33,6 +34,10 @@
 
         .reveal .slides .fragment.visible.dim:not(.current-fragment) {
             opacity: 0.5;
+        }
+
+        .reveal .slides .fragment.visible.hide:not(.current-fragment) {
+            display: none;
         }
 
         .reveal .slides em,
@@ -152,15 +157,23 @@
                     <li>Inline css og script blir blokkert</li>
                 </ul>
             </section>
+            <section id="demoImageSource">
+                <h3>Demo</h3>
+                <a href="@Url.Action("ImageSource", "Csp")"><i class="fa fa-play-circle"></i> Demonstrasjon av img-src</a>
+            </section>
             <section>
                 <h3>Rapportering</h3>
                 <p class="left">Legg til direktiv <em>report-uri</em> og <em>url</em></p>
-
+                <pre style="font-size:0.5em;"><code class="http">Content-Security-Policy: default-src 'self'; report-uri /Csp/Reporting</code></pre>
                 <p class="left"><span class="glyphicon glyphicon-arrow-right"></span>Nettleser sender JSON-rapport til denne url med beskrivelse av hendelser som bryter oppsatte regler.</p>
                 <p class="left">
                     Dersom Content-Security-Policy-Report-Only benyttes i stedet for den vanlige Content-Security-Policy
                     så blokkeres ingenting, men rapporter på regelbrudd blir sendt.
                 </p>
+            </section>
+            <section id="demoReport">
+                <h3>Demo</h3>
+                <a href="@Url.Action("Report", "Csp")"><i class="fa fa-play-circle"></i> Demonstrasjon av rapportering</a>
             </section>
             <section>
                 <h3>Browser-støtte</h3>

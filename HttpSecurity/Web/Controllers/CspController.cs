@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -23,6 +26,89 @@ namespace Web.Controllers
             ViewBag.Source = source;
 
             return View();
+        }
+
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult ReportOnly()
+        {
+            var header = "Content-Security-Policy-Report-Only";
+            var policy = "default-src 'self'; report-uri /Csp/RegisterReport";
+            Response.AddHeader(header, policy);
+
+            ViewBag.HttpHeader = header;
+            ViewBag.Policy = policy;
+
+            return View();
+        }
+
+        [OutputCache(NoStore = true, Duration = 0)]
+        public ActionResult Report()
+        {
+            var header = "Content-Security-Policy-Report";
+            var policy = "default-src 'self'; report-uri /Csp/RegisterReport";
+            Response.AddHeader(header, policy);
+
+            ViewBag.HttpHeader = header;
+            ViewBag.Policy = policy;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DownloadCspReport()
+        {
+            var filePath = Server.MapPath("~/Reports/CspReport.txt");
+            
+            if (System.IO.File.Exists(filePath))
+            {
+                return File(filePath, "text/plain", "CspReport.txt");
+            }
+
+            return HttpNotFound("Finnes ingen rapport ennå");
+        }
+
+        [HttpPost]
+        public EmptyResult RegisterReport()
+        {
+            CspReportRequest reportRequest = ProcessCspValidationReport();
+
+            AddReport(reportRequest);
+                
+            return new EmptyResult();
+        }
+
+        private CspReportRequest ProcessCspValidationReport()
+        {
+            Request.InputStream.Position = 0;
+            using (StreamReader inputStream = new StreamReader(Request.InputStream))
+            {
+                string s = inputStream.ReadToEnd();
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    CspReportRequest cspPost = JsonConvert.DeserializeObject<CspReportRequest>(s);
+                    return cspPost;
+                }
+            }
+
+            return null;
+        }
+
+
+        private void AddReport(CspReportRequest reportRequest)
+        {
+            if (reportRequest != null && reportRequest.CspReport != null)
+            {
+                var mapPath = Server.MapPath("~/Reports/CspReport.txt");
+
+                if (mapPath != null)
+                {
+                    try
+                    {
+                        System.IO.File.AppendAllText(mapPath, reportRequest.CspReport.ToString());
+                    }
+                    catch (IOException) { }
+                }
+            }
         }
 
         [Flags]

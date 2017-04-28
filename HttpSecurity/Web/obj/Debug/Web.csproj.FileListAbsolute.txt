@@ -12,6 +12,7 @@ C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.Deployment.dll
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.dll
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.Razor.dll
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\WebGrease.dll
+C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\Newtonsoft.Json.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.Helpers.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.Mvc.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.Optimization.xml
@@ -20,7 +21,6 @@ C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.Deployment.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\System.Web.WebPages.Razor.xml
 C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\Antlr3.Runtime.pdb
-C:\GitRepos\BouvetOne\HttpSecurity\Web\bin\Newtonsoft.Json.xml
-C:\GitRepos\BouvetOne\HttpSecurity\Web\obj\Debug\Web.csprojResolveAssemblyReference.cache
 C:\GitRepos\BouvetOne\HttpSecurity\Web\obj\Debug\Web.dll
 C:\GitRepos\BouvetOne\HttpSecurity\Web\obj\Debug\Web.pdb
+C:\GitRepos\BouvetOne\HttpSecurity\Web\obj\Debug\Web.csprojResolveAssemblyReference.cache

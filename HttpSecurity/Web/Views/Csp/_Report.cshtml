@@ -1,0 +1,45 @@
+﻿<a class="btn btn-default" href="@Url.Action("Index", "Presentation")#demoReport"><span class="glyphicon glyphicon-circle-arrow-left"></span> Tilbake til presentasjon</a>
+
+<h3>Http Header (Response)</h3>
+
+<ol>
+    <li>@Html.ActionLink("CSP og rapportering", "Report")</li>
+    <li>@Html.ActionLink("Kun rapportering", "ReportOnly")</li>
+</ol>
+
+<code>
+    Response.AddHeader("@ViewBag.HttpHeader", "@ViewBag.Policy");
+</code>
+
+
+
+<h3>Stilede elementer og script</h3>
+<div class="row">
+    <div class="col-sm-4">
+        <div style="width: 200px; height: 200px; background-color: greenyellow; border-radius: 20px; "></div>    
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-lg btn-danger" onclick="javascript: alert('Hei!');"><span class="glyphicon glyphicon-arrow-right"></span> Trykk meg <span class="glyphicon glyphicon-arrow-left"></span></button>
+    </div>
+    <div class="col-sm-4">
+        <p class="v" style="display: none;">Tekst som script viser frem</p>
+        <p class="v" style="display: none;">Tekst som script viser frem</p>
+        <p class="v" style="display: none;">Tekst som script viser frem</p>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 15px;">
+    <div class="col-sm-12">
+        <p>
+            <a class="btn btn-default" href="@Url.Action("DownloadCspReport")"><span class="glyphicon glyphicon-download"></span> Last ned rapport</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            $("p.v").show(1000);
+        });
+    </script>
+}
