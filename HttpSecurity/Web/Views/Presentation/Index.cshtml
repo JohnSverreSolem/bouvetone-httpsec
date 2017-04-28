@@ -165,10 +165,13 @@
                 <h3>Rapportering</h3>
                 <p class="left">Legg til direktiv <em>report-uri</em> og <em>url</em></p>
                 <pre style="font-size:0.5em;"><code class="http">Content-Security-Policy: default-src 'self'; report-uri /Csp/Reporting</code></pre>
-                <p class="left"><span class="glyphicon glyphicon-arrow-right"></span>Nettleser sender JSON-rapport til denne url med beskrivelse av hendelser som bryter oppsatte regler.</p>
-                <p class="left">
-                    Dersom Content-Security-Policy-Report-Only benyttes i stedet for den vanlige Content-Security-Policy
+                <p class="left small fragment dim"><span class="glyphicon glyphicon-arrow-right"></span>Nettleser sender JSON-rapport til denne url med beskrivelse av hendelser som bryter oppsatte regler.</p>
+                <p class="left small fragment dim">
+                    Dersom Content-Security-Policy<strong>-Report-Only</strong> benyttes i stedet for den vanlige Content-Security-Policy
                     så blokkeres ingenting, men rapporter på regelbrudd blir sendt.
+                </p>
+                <p class="left small fragment dim">
+                    Det er også mulig å legge til begge samtidig - dermed kan man få utvidet rapportering.
                 </p>
             </section>
             <section id="demoReport">
@@ -179,9 +182,9 @@
                 <h3>Browser-støtte</h3>
                 <dl>
                     <dt>CSP 1.0:</dt>
-                    <dd>Opera 15, Chrome 25, Firefox 23, Safari 6, Edge</dd>
+                    <dd>Opera 15 (2013), Chrome 25 (2013), Firefox 23 (2014), Safari 7 (2013), Edge 12 (2015) <em>(94%)</em></dd>
                     <dt>CSP Level 2:</dt>
-                    <dd>Opera 27, Chrome 40, Firefox 31 (delvis)</dd>
+                    <dd>Opera 27 (2015), Chrome 40 (2015), Firefox 31 (delvis), Safari 10 (2016), Edge 15 (2017) <em>(75%)</em></dd>
                 </dl>
                 <a href="http://caniuse.com/#search=csp">http://caniuse.com/#search=csp</a>
             </section>
