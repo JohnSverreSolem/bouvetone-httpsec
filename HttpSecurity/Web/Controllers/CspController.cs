@@ -31,12 +31,12 @@ namespace Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult ReportOnly()
         {
-            var header = "Content-Security-Policy-Report-Only";
-            var policy = "default-src 'self'; report-uri /Csp/RegisterReport";
-            Response.AddHeader(header, policy);
+            //var header = "Content-Security-Policy-Report-Only";
+            //var policy = "default-src 'self'; script-src 'none'; report-uri /Csp/RegisterReport";
+            //Response.AddHeader(header, policy);
 
-            ViewBag.HttpHeader = header;
-            ViewBag.Policy = policy;
+            //ViewBag.HttpHeader = header;
+            //ViewBag.Policy = policy;
 
             return View();
         }
@@ -44,8 +44,8 @@ namespace Web.Controllers
         [OutputCache(NoStore = true, Duration = 0)]
         public ActionResult Report()
         {
-            var header = "Content-Security-Policy-Report";
-            var policy = "default-src 'self'; report-uri /Csp/RegisterReport";
+            var header = "Content-Security-Policy";
+            var policy = "default-src 'self'; script-src 'none'; report-uri /Csp/RegisterReport";
             Response.AddHeader(header, policy);
 
             ViewBag.HttpHeader = header;
